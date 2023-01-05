@@ -1,0 +1,45 @@
+.QuestionInterface{
+    background-color: rgb(195, 237, 255);
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    height: 100%;
+    display: inline-block;
+}
+
+.Interface{
+    background-color: rgb(195, 237, 255);
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    height: 100%;
+    /* display: none; */
+}
+
+.hide{
+    padding: 10px;
+    margin: 10px;
+    display: none;
+    visibility: hidden;     
+}
+
+.QuestionHeader{
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: bold;
+    margin: 10px;   
+}
+
+.QuestionHeader::selection{
+    background-color: rgb(191, 174, 255);
+    color: rgb(0, 0, 0);
+}
+
+.Answer{
+    font-size: 10px;
+    font-family: monospace;
+    cursor: pointer;
+    margin: 10px; 
+}
