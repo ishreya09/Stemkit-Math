@@ -43,3 +43,11 @@
     cursor: pointer;
     margin: 10px; 
 }
+
+.tablewidth{
+    width: 2px;
+}
+.inputwidth{
+    max-width: 130px;
+    background-color: rgb(97, 200, 244);
+}

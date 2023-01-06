@@ -3,6 +3,7 @@ import Interface from './Components/Interface';
 import QuestionForm from './Components/QuestionForm';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Randomize from './Components/Randomize';
+import MathDpp from './Components/MathDpp';
 
 
 function App() {
@@ -11,9 +12,10 @@ function App() {
 
       <Router>
         <Routes>
-          <Route path="/" element={<QuestionForm />} />
-          <Route path="/question" element={<Interface />} />
+          <Route path="/question" element={<QuestionForm />} />
+          <Route path="/question-set-variable" element={<Interface />} />
           <Route path="/randomizeques" element={<Randomize />} />
+          <Route path="/math-integers-dpp" element={<MathDpp />} />
         </Routes>
       </Router>
     </div>

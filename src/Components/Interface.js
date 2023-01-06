@@ -343,7 +343,7 @@ class Interface extends React.Component {
                             <span style={{ marginRight: "5px" }} ><button className='btn btn-dark' onClick={this.loadVariableForm} >Insert Variable</button></span>
                             <span style={{ marginRight: "5px" }} ><button className='btn btn-dark ' onClick={this.loadInsertFormulaForm}>Insert Formula</button></span>
                             <span style={{ marginRight: "5px" }} ><button className='btn btn-dark ' onClick={this.loadRandomize}>Randomize</button></span>
-                            <span ><button className='btn btn-dark ' onClick={() => window.location = "/"}>Add Another Question</button></span>
+                            <span ><button className='btn btn-dark ' onClick={() => window.location = "/question"}>Add Another Question</button></span>
 
 
 

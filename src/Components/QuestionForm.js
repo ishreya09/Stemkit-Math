@@ -28,7 +28,7 @@ class QuestionForm extends React.Component {
 
         // setting the question cookie
         Cookies.set('question', ques);
-        window.location="/question"
+        window.location="/question-set-variable"
 
     }
 
