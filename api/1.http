@@ -1,0 +1,9 @@
+POST http://127.0.0.1:5000/polynomial
+Content-Type: application/json
+
+{
+    "poly1":"+6x^4 -4x^3 +3x^2 +2x",
+    "poly2":"+4x^3 -3x^2 -2x +4",
+    "choice":2,
+    "answer":""
+}

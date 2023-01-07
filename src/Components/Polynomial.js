@@ -1,5 +1,6 @@
 import React from 'react';
 import './interface.css';
+import axios from 'axios'
 
 function min(a, b) {
     if (a > b) {
@@ -23,12 +24,6 @@ class Polynomial extends React.Component {
         this.setPoly2 = this.setPoly2.bind(this)
         this.setChoice = this.setChoice.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.addPoly = this.addPoly.bind(this)
-        this.subPoly = this.subPoly.bind(this)
-        
-        this.coefList=this.coefList.bind(this)
-        this.splitNumberVariable=this.splitNumberVariable.bind(this)
-        this.isVarEqual=this.isVarEqual.bind(this)    
     }
 
     setChoice(event) {
@@ -44,216 +39,39 @@ class Polynomial extends React.Component {
         this.setState({ poly2: event.target.value });
     }
 
-    splitNumberVariable(str) {
-        alert("splitNumberVariable")
-        // eg : "+23x^3" returns an array [23,"x^3"]
-        var list = []
-        if (str.length == 1) {
-            return [Number(str), ""];
-        }
-        for (var i = 0; i < str.length; i++) {
-            if (str[i].isAlpha()) {
-                list.push(Number(str.slice(0, i)))
-                list.push(str.slice(i))
-                return list;
-            }
-        }
-
-    }
-
-    coefList(str) {
-        alert("coefList")
-
-        // write a function to convert string to number for only the string part 
-        // eg : "+23x^3" returns an array [23,"x",3]
-        // eg : "-23x^3" returns an array [-23,"x",3]
-        // eg : "23a^3" returns an array [23,"a",3]
-        // eg : "23" returns an array [23,"",0]
-        // eg : "-23" returns an array [-23,"",0]
-        // eg : "23x" returns an array [23,"x",1]
-        // eg : "-23x" returns an array [-23,"x",1]
-        // eg : "23x^" returns an array [23,"x",1]
-        // eg : "-23x^" returns an array [-23,"x",1]
-        // eg : "23xy^3" returns an array [23,"x",1,"y",3]
-        // eg : "-23xy^3" returns an array [-23,"x",1,"y",3]
-        // eg : "23xy^" returns an array [23,"x",1 ,"y",1]
-        // eg : "-23xy^" returns an array [-23,"x",1,"y",1]
-
-        var list = this.splitNumberVariable(str)
-        var coef = list[0]
-        var variable = list[1]
-        var variableList = []
-        var powerList = []
-        var i = 0
-        if (Number(variable.length) == 0) {
-            return [coef, "", "0"];
-        }
-        while (i < variable.length) {
-            if (variable[i].isAlpha()) {
-                variableList.push(variable[i])
-                i += 1
-
-                if (variable[i] == "^") {
-                    i += 1
-                    if (i != variable.length && variable[i].isDigit()) {
-                        var power = ""
-                        while (i < variable.length && variable[i].isDigit()) {
-                            power += variable[i]
-                            i += 1
-                        }
-                        powerList.push(power)
-                    }
-                    else {
-                        powerList.push("1")
-                    }
-                }
-                else if (variable[i].isAlpha()) { // xy
-                    powerList.push("1")
-                }
-                else if (i == variable.length) { // x
-                    powerList.push("1")
-                }
-
-            }
-        }
-        var answer = [coef]
-        for (var i = 0; i < variableList.length; i++) {
-            answer.push(variableList[i])
-            answer.push(powerList[i])
-        }
-        return answer;
-
-    }
-    isVarEqual(list1,list2){
-        alert("isVarEqual")
-        if(list1.length > list2.length){
-            return -1;
-        }
-        else if (list1.length < list2.length){
-            return 1;
-        }
-        for(var i=1;i<list1.length;i++){
-            if(list1[i] != list2[i]){
-                // differentiate between variables and coef
-                if (list1[i].isAlpha()){
-                    // variables don't match
-                    if (list1[i]>list2[i]){
-                        return 1
-                    }
-                    else{
-                        return -1
-                    }
-                }
-                else if(list1[i].isDigit){
-                    // power don't match
-                    if (list1[i]>list2[i]){
-                        return -1
-                    }
-                    else{
-                        return 1
-                    }
-                }
-            }
-        }
-        return 0;
-    }
-
-    addPoly(poly1, poly2) {
-        alert("add")
-
-        var p1 = poly1.split(" ")
-        var p2 = poly2.split(" ")
-        var answer = [];
-        var j = 0;
-        var k = 0;
-        var i = 0;
-        while (i < p1.length && j < p2.length) {
-            var c1 = this.coefList(p1[i])
-            alert ("hello")
-            var c2 = this.coefList(p2[j])
-            var flag=this.isVarEqual(c1,c2);
-            if (flag == 0) {
-                var coef = c1[0] + c2[0];
-                if (coef != 0) {
-                    var k= this.splitNumberVariable(p1[i])[1];
-                    answer.push(coef +k )
-                }
-                i += 1;
-                j += 1;
-            }
-            else if (flag == -1) {
-                answer.push(p1[i])
-                i += 1;
-            }
-            else if (flag == 1) {
-                answer.push(p2[j])
-                j += 1;
-            }
-        }
-        while (i < p1.length) {
-            answer.push(p1[i])
-        }
-        while (j < p2.length) {
-            answer.push(p2[j])
-        }
-
-        var final = answer.join (" ")
-        alert (final)
-        return final;
-    }
-
-    subPoly(poly1, poly2) {
-        var p1 = poly1.split(" ")
-        var p2 = poly2.split(" ")
-        var answer = [];
-        var j = 0;
-        var k = 0;
-        var i = 0;
-        while (i < p1.length && j < p2.length) {
-            var c1 = this.coefList(p1[i])
-            var c2 = this.coefList(p2[j])
-            var flag=this.isVarEqual(c1,c2);
-            if (flag == 0) {
-                var coef = c1[0] - c2[0];
-                if (coef != 0) {
-                    var k= this.splitNumberVariable(p1[i])[1];
-                    answer.push(coef +k )
-                }
-                i += 1;
-                j += 1;
-            }
-            else if (flag == -1) {
-                answer.push(p1[i])
-                i += 1;
-            }
-            else if (flag == 1) {
-                answer.push(p2[j])
-                j += 1;
-            }
-        }
-        var final = answer.join (" ")
-        return final;
-    }
-
     handleSubmit(event) {
         event.preventDefault();
         var poly1 = this.state.poly1
         var poly2 = this.state.poly2
         var choice = this.state.choice
         var answer = ""
+        // alert("submit clicked")
         
-        if (choice == 1) {
-            answer = this.addPoly(poly1, poly2)
-            alert("handle")
-        }
-        else if (choice == 2) {
-            answer = this.subPoly(poly1, poly2)
-        }
-        alert(answer)
-        this.setState({ answer: answer }, () => {
-            alert(this.state.answer)
-            this.render()
+
+        fetch("http://127.0.0.1:5000/polynomial", {
+            method: "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //make sure to serialize your JSON body
+            body: JSON.stringify(this.state)
         })
+        .then((response) => {
+            // console.log(response)
+            return response.json()
+        })
+        .catch((err)=>{
+            return (err)
+        })
+        .then((data)=>{
+            // alert(data.answer)
+            this.setState({answer: data.answer})
+        })
+        .catch((err)=>{
+            alert(err)
+        })
+
         // reload the component
         // this.forceUpdate()
 
