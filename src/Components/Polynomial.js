@@ -1,6 +1,6 @@
 import React from 'react';
 import './interface.css';
-import axios from 'axios'
+// import axios from 'axios '
 
 function min(a, b) {
     if (a > b) {
@@ -46,7 +46,7 @@ class Polynomial extends React.Component {
         var choice = this.state.choice
         var answer = ""
         // alert("submit clicked")
-        
+
 
         fetch("http://127.0.0.1:5000/polynomial", {
             method: "post",
@@ -57,20 +57,20 @@ class Polynomial extends React.Component {
             //make sure to serialize your JSON body
             body: JSON.stringify(this.state)
         })
-        .then((response) => {
-            // console.log(response)
-            return response.json()
-        })
-        .catch((err)=>{
-            return (err)
-        })
-        .then((data)=>{
-            // alert(data.answer)
-            this.setState({answer: data.answer})
-        })
-        .catch((err)=>{
-            alert(err)
-        })
+            .then((response) => {
+                // console.log(response)
+                return response.json()
+            })
+            .catch((err) => {
+                return (err)
+            })
+            .then((data) => {
+                // alert(data.answer)
+                this.setState({ answer: data.answer })
+            })
+            .catch((err) => {
+                alert(err)
+            })
 
         // reload the component
         // this.forceUpdate()
@@ -115,6 +115,19 @@ class Polynomial extends React.Component {
                                     <select className="form-control" onChange={this.setChoice} id="exampleFormControlSelect1">
                                         <option value="1" defaultChecked >Addition</option>
                                         <option value="2" >Subtraction</option>
+                                        <option value="3" >Multiplication</option>
+                                        <option value="4" >Division</option>
+                                        <option value="5" >Power</option>
+                                        {/* <option value="9" >Union</option> */}
+                                        {/* <option value="6" >Intersection</option> */}
+                                        {/* <option value="10" >Complement</option> */}
+                                        {/* <option value="11" >Symmetric Difference</option> */}
+                                        {/* <option value="12" >Cartesian Product</option> */}
+                                        {/* <option value="7" >LCM of 2 Polynomial</option> */}
+                                        {/* <option value="8" >GCD of 2 Polynomial</option> */}
+                                        <option value="13" >Draw Polynomials</option>
+
+
                                     </select>
                                 </div><br />
 
@@ -140,6 +153,10 @@ class Polynomial extends React.Component {
                         <div className="col">
                             <h6>Answer</h6>
                             <p>{this.state.answer}</p>
+                            {
+                                this.state.choice === 13 ? <img src="D:\mama\addition\src\img\polynomialdraw.png"></img> : <></>
+                            }
+                            
                         </div>
                     </div>
                 </div>
