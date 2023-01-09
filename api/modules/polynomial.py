@@ -94,7 +94,11 @@ def getVariables(str):
     else:
         return ['']
 
-
+def getNumberOfVariables(vars):
+    """
+    returns the number of variables in the polynomial
+    """
+    return len(max(vars, key=len))
 
 def getPolynomialExp(polynomial):
     """
@@ -125,6 +129,11 @@ def sortPolynomial(polynomial):
     polynomial.sort(reverse=True)
     return polynomial
 
+# def getNumpyPolynomial(n,d):
+#     """
+#     returns a numpy polynomial with n variables and degree d
+#     """
+#     return np.polynomial.Polynomial(np.zeros((d+1,n)))
 
 class Polynomial:
     def getPolynomialData(self):
@@ -148,11 +157,13 @@ class Polynomial:
         self.poly = poly
         self.terms = poly.split(' ')
         self.coef = [getCoef(term) for term in self.terms]
-        print("coef:",self.coef)
+        # print("coef:",self.coef)
         self.degrees = [getDegree(term) for term in self.terms]
         self.powers = [getPowers(term) for term in self.terms]
         self.variables = [getVariables(term) for term in self.terms]
         self.polynomial= self.getPolynomialData()
+        self.no_of_vars= getNumberOfVariables(self.variables)
+        self.poly_degree = max(self.degrees)
 
         # sort
         self.polynomial = sortPolynomial(self.polynomial)
@@ -167,8 +178,6 @@ class Polynomial:
 
         # store polynomial as nD numpy polynomial
         # self.np_poly = np.poly1d(self.coef)
-
-
 
     def __str__(self):
         return str(self.poly)
@@ -259,9 +268,10 @@ class Polynomial:
 # print(b-a)
 # print(a-b)
 
-# c=Polynomial("+6x^4 -4x^3 +3x^2 +2x +4")
 # d=Polynomial("+6x^4 -4x^3 +3x^2 +2x +4")
-# print(c-d)
 # print(-d)
+
+# c=Polynomial("+6x^4y^4 -4x^3 +3x^2 +2x +4")
+# print(c.no_of_vars)
 
 

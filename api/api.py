@@ -2,7 +2,8 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from flask_cors import CORS, cross_origin
-import modules.polynomial as p 
+import modules.multinomial as m
+import sympy
 # creating the flask app
 app = Flask(__name__)
 # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -24,19 +25,34 @@ class Polynomial(Resource):
 		data = request.get_json()
 		a=(data['poly1'])
 		b=(data['poly2'])
-		p1= p.Polynomial(a)
-		p2= p.Polynomial(b)
+		a=m.stringToStrEquation(a)
+		b=m.stringToStrEquation(b)
+		p1= m.Multinomial(a.strip())
+		p2= m.Multinomial(b.strip())
 		ans="something went wrong"
 		if (data['choice']==1):
-			ans=(p1+p2).poly
-		
+			ans=(p1+p2)
 		elif (data['choice']==2):
-			p2= -p2
-			print(p1.polynomial)
-			print(p2.polynomial)
-			ans=(p1+p2).poly
+			ans=(p1-p2)
+		elif (data['choice']==3):
+			ans=(p1*p2)
+		elif (data['choice']==4):
+			ans=(p1/p2)
+		elif (data['choice']==5):
+			ans=p1**p2
+		elif (data['choice']==7):
+			ans=p1.getLCM(p2)
+		elif (data['choice']==8):
+			ans=p1.getGCD(p2)
+		elif (data['choice']==13):
+			ans=p1.drawPoly(p2)
+		ans=sympy.simplify(ans)
+		ans=m.equationToStr(ans)	
 		if(ans==""):
 			ans="0"
+		print(a)
+		print(b)
+		print(ans)
 		data['answer']=ans
 
 		# return the sum of two numbers posted
