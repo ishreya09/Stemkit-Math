@@ -1,15 +1,5 @@
 import React from 'react';
 import './interface.css';
-// import axios from 'axios '
-
-function min(a, b) {
-    if (a > b) {
-        return b
-    }
-    else {
-        return a
-    }
-}
 
 class Polynomial extends React.Component {
     constructor() {
@@ -27,7 +17,8 @@ class Polynomial extends React.Component {
     }
 
     setChoice(event) {
-        this.setState({ choice: Number(event.target.value) });
+        this.setState({ choice: Number(event.target.value), answer:"" });
+        
 
     }
 
@@ -41,10 +32,6 @@ class Polynomial extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        var poly1 = this.state.poly1
-        var poly2 = this.state.poly2
-        var choice = this.state.choice
-        var answer = ""
         // alert("submit clicked")
 
 
@@ -154,7 +141,7 @@ class Polynomial extends React.Component {
                             <h6>Answer</h6>
                             <p>{this.state.answer}</p>
                             {
-                                this.state.choice === 13 ? <img src="D:\mama\addition\src\img\polynomialdraw.png"></img> : <></>
+                                this.state.choice === 13 ? <img src="src\img\polynomialdraw.png" alt="graphs"></img> : <></>
                             }
                             
                         </div>

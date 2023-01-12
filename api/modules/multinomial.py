@@ -1,9 +1,32 @@
+# from sympy import *
 import sympy
 import math
-import scipy
+# import scipy
 import numpy as np
 
 sympy.init_printing()
+
+# Pass the symbols to be as arguments to the symbols() function
+# and store them in corresponding variables.
+# x, y = sympy.symbols('x, y')
+
+def findMatchingParenthesis(str,i):
+    """
+    str: string
+    i: index of opening parenthesis
+    return: index of closing parenthesis
+    
+    """
+    count=0
+    while(i<len(str)):
+        if(str[i]=="("):
+            count+=1
+        elif(str[i]==")"):
+            count-=1
+        if(count==0):
+            return i
+        i+=1
+    return -1
 
 def stringToStrEquation(str):
     """
@@ -12,23 +35,48 @@ def stringToStrEquation(str):
     str= str.replace(" ","")
     str= str.replace("^","**")
     eq=""
-    # print(str)
+    print(str)
     i=0
     while(i<len(str)):
-        if (str[i].isalpha()):
+        if(str[i:].startswith("sin") or str[i:].startswith("cos") or 
+            str[i:].startswith("tan") or str[i:].startswith("log") ):
             if(str[i-1].isdigit() or str[i-1].isalpha()):
+                eq= eq+"*"
+            # print(eq)
+            # eq=eq+"sympy."+str[i:i+3]
+            eq=eq+str[i:i+3]
+            # print(eq)
+            i+=2
+        elif(str[i:].startswith("sqrt")):
+            if(str[i-1].isdigit() or str[i-1].isalpha()):
+                eq= eq+"*"
+            eq=eq+"sqrt"
+            i+=3
+        elif (str[i].isalpha()):
+            if (i+1<len(str) and str[i+1]=="("):
+                eq=eq+str[i]+"*"
+                # print("eq(",eq)
+            elif(i>0 and (str[i-1].isdigit() or str[i-1].isalpha())):
+                # print("str",str)
                 eq= eq+"*"+str[i]
+                # print("eq*",eq,str[i-1],str[i],i,i-1)
             else:
                 eq=eq+str[i]
+                # print("eqelse",eq)
+
+            # print(eq)
         elif (str[i]=="("):
             # check if eq endswith a variable or a number power to a variable
-            if (eq[-1].isalpha() or (eq[-1].isdigit() and eq[-2]=="*" and eq[-3]=="*" ) ):
+            if ((not eq.endswith("sin")) or (not eq.endswith("cos")) or (not eq.endswith("tan")) or (not eq.endswith("log")) or (not eq.endswith("sqrt"))):
+                pass
+            elif (eq[-1].isalpha() or eq[-1].isdigit() and eq[-2]=="*" and eq[-3]=="*" ):
                 eq=eq+"*"
 
             # solve the paranthesis
-            k=i+1
-            while(k<len(str) and str[k]!=')'):
-                k+=1
+            # k=i+1
+            # while(k<len(str) and str[k]!=')'):
+            #     k+=1
+            k=findMatchingParenthesis(str,i)
             new=str[i+1:k]
             # print(k)
             i=k
@@ -38,8 +86,9 @@ def stringToStrEquation(str):
             eq=eq+new
 
             # check if there is a variable followed by bracket in the str or another bracket
-            if (k+1<len(str) and (str[k+1].isalpha() or str[k+1]=="(")):
+            if (k+1<len(str) and (str[k+1].isalpha() or str[k+1]=="(" )):
                 eq=eq+"*"
+                # print(eq)
         else:
             eq=eq+str[i]
         # print(eq,i)
@@ -49,11 +98,15 @@ def stringToStrEquation(str):
 
             
       
-k=stringToStrEquation("+4x^2y^3 ( +7x )(6x) -3xy^5* ( +1x^5 +5x -1 ) ")
-# print(k) 
+k=stringToStrEquation("4x^2y^3 sin(6x+1)( 6x )(x) -3xy^5* ( +1x^5 +5x -1 ) ")
+print(k) 
 eq=sympy.sympify(k)
+print(eq)
 eq= sympy.simplify(eq)
-# print(eq)
+print(eq)
+# x=sympy.Symbol("x")
+# p=sympy.sin(x)
+# print(p)
 
 def getCoefIndex(str):
         if(len(str) == 0):
@@ -305,6 +358,12 @@ class Multinomial():
         result = sympy.solve(self.poly_exp)
         # print(result)
         return result  # list
+    
+    def solve(self,other):
+        """
+        Solves 2 polynomials
+        """
+        
 
     def draw(self):
         """
