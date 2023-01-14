@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Randomize from './Components/Randomize';
 import MathDpp from './Components/MathDpp';
 import Polynomial from './Components/Polynomial';
+import Graph from './Components/Graph';
 
 
 function App() {
@@ -17,7 +18,9 @@ function App() {
           <Route path="/question-set-variable" element={<Interface />} />
           <Route path="/randomizeques" element={<Randomize />} />
           <Route path="/math-integers-dpp" element={<MathDpp />} />
-          <Route path="/polynomial-operations" element={<Polynomial />} />
+          <Route path="/two-polynomial-operations" element={<Polynomial />} />
+          <Route path="image/two-polynomial-graph" element={<Graph />} />
+
         </Routes>
       </Router>
     </div>

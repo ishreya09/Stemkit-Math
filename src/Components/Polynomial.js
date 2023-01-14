@@ -1,5 +1,7 @@
 import React from 'react';
 import './interface.css';
+import Graph from "./Graph"
+
 
 class Polynomial extends React.Component {
     constructor() {
@@ -19,7 +21,6 @@ class Polynomial extends React.Component {
     setChoice(event) {
         this.setState({ choice: Number(event.target.value), answer:"" });
         
-
     }
 
     setPoly1(event) {
@@ -58,7 +59,11 @@ class Polynomial extends React.Component {
             .catch((err) => {
                 alert(err)
             })
-
+        
+        if(this.state.choice==13){
+            window.location="/image/two-polynomial-graph"
+        }   
+        
         // reload the component
         // this.forceUpdate()
 
@@ -140,9 +145,10 @@ class Polynomial extends React.Component {
                         <div className="col">
                             <h6>Answer</h6>
                             <p>{this.state.answer}</p>
-                            {
-                                this.state.choice === 13 ? <img src="src\img\polynomialdraw.png" alt="graphs"></img> : <></>
-                            }
+                            {/* <div className='hide'>
+                                
+                                <Graph />
+                            </div> */}
                             
                         </div>
                     </div>

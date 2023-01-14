@@ -98,13 +98,13 @@ def stringToStrEquation(str):
 
             
       
-k=stringToStrEquation("4x^2y^3 sin(6x+1)( 6x )(x) -3xy^5* ( +1x^5 +5x -1 ) ")
-print(k) 
-eq=sympy.sympify(k)
-print(eq)
-eq= sympy.simplify(eq)
-print(eq)
-# x=sympy.Symbol("x")
+# k=stringToStrEquation("4x^2y^3 sin(6x+1)( 6x )(x) -3xy^5* ( +1x^5 +5x -1 ) ")
+# print(k) 
+# eq=sympy.sympify(k)
+# print(eq)
+# eq= sympy.simplify(eq)
+# print(eq)
+# x=sympy.Symbol("x") 
 # p=sympy.sin(x)
 # print(p)
 
@@ -238,8 +238,8 @@ class Multinomial():
         self.str = stringToStrEquation(str)
         self.poly_exp= sympy.sympify(str)
         self.poly_exp= sympy.simplify(self.poly_exp)
-        poly = self.poly_exp.as_poly()
-        print(poly)
+        # poly = self.poly_exp.as_poly()
+        # print(poly)
         # get all terms
 
         
@@ -363,7 +363,7 @@ class Multinomial():
         """
         Solves 2 polynomials
         """
-        
+
 
     def draw(self):
         """
@@ -423,7 +423,7 @@ class Multinomial():
         returns the LCM of two polynomials
         """
         result = sympy.lcm(self.poly_exp,other.poly_exp)
-        eq= result.__str__()
+        # eq= result.__str__()
         return result
     
     def getGCD(self,other):
@@ -431,7 +431,7 @@ class Multinomial():
         returns the GCD of two polynomials
         """
         result = sympy.gcd(self.poly_exp,other.poly_exp)
-        eq= result.__str__()
+        # eq= result.__str__()
         return result
     
     def getLCMList(self,other):
@@ -439,7 +439,7 @@ class Multinomial():
         returns the LCM of two polynomials
         """
         result = sympy.lcm_list([self.poly_exp,other.poly_exp])
-        eq= result.__str__()
+        # eq= result.__str__()
         return result
     
     def getGCDList(self,other):
@@ -447,13 +447,14 @@ class Multinomial():
         returns the GCD of two polynomials
         """
         result = sympy.gcd_list([self.poly_exp,other.poly_exp])
-        eq= result.__str__()
+        # eq= result.__str__()
         return result
     
     def drawPoly(self,other):
         """
         draws the polynomial
         """
+        x=sympy.Symbol('x')
         plot=sympy.plot(self.poly_exp,other.poly_exp,show=False).save("D:\\mama\\addition\\src\\img\\polynomialdraw.png")
         # print(plot.save("1.png"))
         # print(type(plot))
@@ -499,4 +500,3 @@ expr1=sympy.sympify(expr)
 print(expr1) 
 print(expr1.subs(x,2)) # substiting x as 2
 """
-

@@ -32,22 +32,32 @@ class Polynomial(Resource):
 		ans="something went wrong"
 		if (data['choice']==1):
 			ans=(p1+p2)
+			ans=sympy.simplify(ans)
+			ans=m.equationToStr(ans)
 		elif (data['choice']==2):
 			ans=(p1-p2)
+			ans=sympy.simplify(ans)
+			ans=m.equationToStr(ans)
 		elif (data['choice']==3):
 			ans=(p1*p2)
+			ans=sympy.simplify(ans)
+			ans=m.equationToStr(ans)
 		elif (data['choice']==4):
 			ans=(p1/p2)
+			ans=sympy.simplify(ans)
+			ans=m.equationToStr(ans)
 		elif (data['choice']==5):
 			ans=p1**p2
+			ans=sympy.simplify(ans)
+			ans=m.equationToStr(ans)
 		elif (data['choice']==7):
 			ans=p1.getLCM(p2)
 		elif (data['choice']==8):
 			ans=p1.getGCD(p2)
+			
 		elif (data['choice']==13):
 			ans=p1.drawPoly(p2)
-		ans=sympy.simplify(ans)
-		ans=m.equationToStr(ans)	
+			
 		if(ans==""):
 			ans="0"
 		print(a)
