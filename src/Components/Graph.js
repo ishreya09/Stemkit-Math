@@ -16,4 +16,10 @@ class Graph extends React.Component{
     }
 }
 
+/*
+//does eval in python evaluate python statements?
+
+
+*/
+
 export default Graph;
