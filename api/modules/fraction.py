@@ -24,22 +24,30 @@ class Fraction:
     def __add__(self, other):
         if isinstance(other, int):
             other = Fraction(other, 1)
-        return Fraction(self.numerator * other.denominator + self.denominator * other.numerator, self.denominator * other.denominator)
+        k= Fraction(self.numerator * other.denominator + self.denominator * other.numerator, self.denominator * other.denominator)
+        k.simplify()
+        return k
     
     def __sub__(self, other):
         if isinstance(other, int):
             other = Fraction(other, 1)
-        return Fraction(self.numerator * other.denominator - self.denominator * other.numerator, self.denominator * other.denominator)
+        k=Fraction(self.numerator * other.denominator - self.denominator * other.numerator, self.denominator * other.denominator)
+        k.simplify()
+        return k
     
     def __mul__(self, other):
         if isinstance(other, int):
             other = Fraction(other, 1)
-        return Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        k=Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        k.simplify()
+        return k
     
     def __truediv__(self, other):
         if (other.numerator ==0):
             raise ZeroDivisionError("Denominator cannot be zero.")
-        return Fraction(self.numerator * other.denominator, self.denominator * other.numerator)
+        k=Fraction(self.numerator * other.denominator, self.denominator * other.numerator)
+        k.simplify()
+        return k
     
     def __eq__(self, other):
         return self.numerator == other.numerator and self.denominator == other.denominator
@@ -68,14 +76,36 @@ class Fraction:
     def getMixedFraction(self):
         return MixedFraction(self.numerator // self.denominator, self.numerator % self.denominator, self.denominator)
 
+    def getFraction(self):
+        return self
+    
+    def getDecimal(self):
+        return self.numerator / self.denominator
+    
+    def getNumerator(self):
+        return self.numerator
+    
+    def getDenominator(self):
+        return self.denominator
+    
+    def getWhole(self):
+        return self.numerator // self.denominator
+    
+    def getRemainder(self):
+        return self.numerator % self.denominator
+    
+    
 # define Mixed Fractions
 
-class MixedFraction(Fraction):
+class MixedFraction():
     def __init__(self, whole, numerator, denominator):
         self.whole = whole
         # set numerator
         num = whole * denominator + numerator
-        super().__init__(num, denominator)
+        # super().__init__(num, denominator)
+        self.numerator = num
+        self.denominator = denominator
+        self.fraction= Fraction(num,denominator)
     
     def __str__(self):
         return f"{self.whole} {self.numerator}/{self.denominator}"
@@ -84,18 +114,76 @@ class MixedFraction(Fraction):
         return f"MixedFraction({self.whole},{self.numerator},{self.denominator})"
     
     def __add__(self, other):
-        return (self+other).getMixedFraction()
+        k= (self.fraction+other.fraction).getMixedFraction()
+        k.simplify()
+        return k
     
     def __sub__(self, other):   
-        return (self-other).getMixedFraction()
+        k= (self.fraction-other.fraction).getMixedFraction()
+        k.simplify()
+        return k
 
     def __mul__(self, other):
-        return (self*other).getMixedFraction()
+        k= (self.fraction*other.fraction).getMixedFraction()
+        k.simplify()
+        return k
     
     def __truediv__(self, other):
-        return (self/other).getMixedFraction()
+        k= (self.fraction/other.fraction).getMixedFraction()
+        k.simplify()
+        return k
+    
+    def __eq__(self, other):
+        return self.fraction == other.fraction
+    
+    def __ne__(self, other):
+        return not self.__eq__(other)
+    
+    def __lt__(self, other):
+        return self.fraction < other.fraction
+    
+    def __le__(self, other):
+        return self.fraction <= other.fraction
+    
+    def __gt__(self, other):
+        return self.fraction > other.fraction
+    
+    def __ge__(self, other):
+        return self.fraction >= other.fraction
+    
+    def __abs__(self):
+        return self.fraction.__abs__()
+    
+    def __pow__(self, power):
+        return self.fraction.__pow__(power)
+    
+    def getFraction(self):
+        return self.fraction
+    
+    def getMixedFraction(self):
+        return self
+    
+    def getDecimal(self):
+        return self.fraction.getDecimal()
+    
+    def getWhole(self):
+        return self.whole
+    
+    def getNumerator(self):
+        return self.numerator
+    
+    def getDenominator(self):
+        return self.denominator
+    
+    def simplify(self):
+        self.fraction.simplify()
+        self.whole = self.fraction.numerator // self.fraction.denominator
+        self.numerator = self.fraction.numerator % self.fraction.denominator
 
     
+a=MixedFraction(1,3,5)
+b=MixedFraction(2,4,5)
+print(a+b)
 
 # define Complex Fractions
 
